@@ -17,8 +17,11 @@
           require("geoR")
           #require("OpenStreetMap")
           #trace("create_matrix", edit=T)     #change Acronym to acronym in line42
-          setwd("~/Desktop/acta/")
+          setwd("~/Desktop/")
           source("./create_matrix2.R")
+          removeURL <- function(data){
+            gsub('http.*\\s*', '', data)
+          }
           start.time <- Sys.time()
           
           
@@ -29,7 +32,7 @@
           #select tweets written in greek and english
           tweets <- subset(tweets, 
                            tweets$X.M..language.. == "el" | tweets$X.M..language.. == "en")
-          
+          tweets$Text <- removeURL(tweets$Text)
           rownames(tweets) <- 1:62011
           
           #word.list$value <- as.numeric(word.list$value)
