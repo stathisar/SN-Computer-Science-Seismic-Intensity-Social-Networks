@@ -1,3 +1,7 @@
+
+#Sep 2020:
+Added removeURL() function.
+
 #29 - DEC:
 
 uploaded: word_list.csv and area shape file.
