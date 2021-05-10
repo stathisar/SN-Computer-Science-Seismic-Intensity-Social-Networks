@@ -18,10 +18,10 @@ results.2hrs <- read.csv("/home/stathis/Desktop/Scripts/results.2hrs.rnn.gstat.1
 results.6hrs <- read.csv("/home/stathis/Desktop/Scripts/results.6hrs.rnn.gstat.10may1502.csv")
 results.24hrs <- read.csv("/home/stathis/Desktop/Scripts/results.24hrs.rnn.gstat.10may1502.csv")
 
-results <- results.24hrs
+results <- results.2hrs
 results <- results[ , c("x.y", "y.y", "value")]
 results2 <- SpatialPointsDataFrame(coords = results[ , c("x.y", "y.y")], data = results)
-t <- st_make_grid(results2, cellsize = 0.04, what = "polygons")
+t <- st_make_grid(results2, cellsize = 0.02, what = "polygons")
 t <- as_Spatial(t)
 t.data <- as.data.frame(matrix(nrow=NROW(t), ncol=1))
 names(t.data) <- c("id")
@@ -33,7 +33,7 @@ t.sp@data$mean <- over(t.sp, results2, fn = mean)[ c("value")]
 
 data.total <- cbind(coordinates(t.sp), t.sp$mean)
 data.total <- subset(data.total, !is.na(data.total$value))
-write.csv(data.total, "/home/stathis/Desktop/Scripts/gstat/gridded.24hrs.csv")
+write.csv(data.total, "/home/stathis/Desktop/Scripts/gstat/gridded.2hrs.csv")
 #data import
   #results total
 
@@ -48,7 +48,7 @@ results.24hrs <- read.csv("/home/stathis/Desktop/Scripts/gstat/gridded.24hrs.csv
 
 #2hrs
 
-results <- results.total
+results <- results.2hrs
 names(results)
 
 results <- results[ ,c("X1", 
@@ -60,7 +60,6 @@ results <- SpatialPointsDataFrame(coords = results[ ,c("X", "Y")], data = result
 results@data$value <- as.numeric(results@data$value)
 
 variogram <- automap::autofitVariogram(results@data$value~1, results, model="Sph")$var_model
-
 plot(automap::autofitVariogram(results@data$value~1, results, model="Sph"), title = "Total")
 
 
@@ -69,7 +68,7 @@ grd_100_sf <- results %>%
   st_bbox() %>% 
   st_as_sfc() %>% 
   st_make_grid(
-    cellsize = c(0.04, 0.04), # 100m pixel size
+    cellsize = c(0.02, 0.02), # 100m pixel size
     what = "centers"
   ) %>%
   st_as_sf() %>%
@@ -95,4 +94,4 @@ shape <- readOGR("/home/stathis/Desktop/SeismicIntensityArticle-master/shapefile
 raster.total <- mask(raster.total, shape)
 
 plot(raster.total)
-writeRaster(raster.total, "/home/stathis/Desktop/Scripts/gstat/raster.total.10.may.1516.gstat.tif", overwrite=TRUE)
+writeRaster(raster.total, "/home/stathis/Desktop/Scripts/gstat/raster.2hrs.10.may.1516.gstat.tif", overwrite=TRUE)
