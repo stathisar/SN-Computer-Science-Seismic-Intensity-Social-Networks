@@ -1,17 +1,13 @@
 rm(list=ls())
-require("rgdal")
-library(tidyverse) # wrangling tabular data and plotting
-library(sf) # processing spatial vector data - the easy way
-library(sp) # processing spatial vector data - the way gstat needs it
-library(raster) # processing spatial raster data. !!!overwrites dplyr::select!!!
-
-# Packages for geostatistics
-library(gstat)   # The most popular R-Package for Kriging (imho)
-library(automap) # Automatize some (or all) parts of the gstat-workflow 
-
-# Finally, some packages to make pretty plots
+require(rgdal)
+library(tidyverse)
+library(sf)
+library(sp)
+library(raster)
+library(gstat)  
+library(automap) 
 library(patchwork)
-library(viridis)#kriging total
+
 #####
 results.total <- read.csv("/home/stathis/Desktop/Scripts/results.rnn.gstat.10.may.1500.csv")
 results.2hrs <- read.csv("/home/stathis/Desktop/Scripts/results.2hrs.rnn.gstat.10may1502.csv")
@@ -35,17 +31,13 @@ data.total <- cbind(coordinates(t.sp), t.sp$mean)
 data.total <- subset(data.total, !is.na(data.total$value))
 write.csv(data.total, "/home/stathis/Desktop/Scripts/gstat/gridded.2hrs.csv")
 #data import
-  #results total
 
 results.total <- read.csv("/home/stathis/Desktop/Scripts/gstat/gridded.total.csv")
 results.2hrs <- read.csv("/home/stathis/Desktop/Scripts/gstat/gridded.2hrs.csv")
 results.6hrs <- read.csv("/home/stathis/Desktop/Scripts/gstat/gridded.6hrs.csv")
 results.24hrs <- read.csv("/home/stathis/Desktop/Scripts/gstat/gridded.24hrs.csv")
 
-  #results 2hrs
-  #results 6 hrs
-  #results 24hrs
-
+  
 #2hrs
 
 results <- results.2hrs
@@ -75,18 +67,18 @@ grd_100_sf <- results %>%
   cbind(., st_coordinates(.))
 
 
-grd_100_sp <- as(grd_100_sf, "Spatial") # converting to {sp} format
-gridded(grd_100_sp) <- TRUE             # informing the object that it is a grid
+grd_100_sp <- as(grd_100_sf, "Spatial")
+gridded(grd_100_sp) <- TRUE    
 grd_100_sp <- as(grd_100_sp, "SpatialPixels") # 
 
 
 #simple kriging total
 krige.gstat <- krige(
-  results@data$value~1,                       # Z is our variable and "~1" means "depends on mean"
+  results@data$value~1,                     
   beta = mean(results$value),
-  results, # input data in {sp} format
-  grd_100_sp,                # locations to interpolate at
-  model = variogram           # the variogram model fitted above
+  results, 
+  grd_100_sp,        
+  model = variogram
 )
 
 raster.total <- rasterFromXYZ(krige.gstat)
