@@ -4,7 +4,7 @@ require("mxnet")
 corpus_bucketed_train <- readRDS(file = "./rnn.model/corpus_bucketed_train.improved__.rds")
 corpus_bucketed_test <- readRDS(file = "./rnn.model/corpus_bucketed_test.improved__.rds")
 
-vocab <- length(corpus_bucketed_train$dic)
+vocab <- length(corpus_bucketed_train$d ic)
 
 ### Create iterators
 batch.size <- 10
@@ -48,7 +48,6 @@ t <-   rnn.graph(config = "seq-to-one",
                  loss_output = "softmax",
                  output_last_state = F,
                  masking = T)
-
 
 
 graph.viz(t, type = "graph", direction = "LR", 
