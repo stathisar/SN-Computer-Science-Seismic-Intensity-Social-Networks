@@ -8,7 +8,7 @@ vocab <- length(corpus_bucketed_train$d ic)
 
 ### Create iterators
 batch.size <- 10
-num.round <- 10
+num.round <- 2
 
 train.data <- mx.io.bucket.iter(buckets = corpus_bucketed_train$buckets, batch.size = batch.size, 
                                 data.mask.element = 0, shuffle = TRUE)
@@ -62,7 +62,7 @@ model_clearance_lstm <- mx.model.buckets(symbol = symbol_buckets,
                                          verbose = FALSE,
                                          metric = mx.metric.accuracy,
                                          optimizer = optimizer,
-                                         initializer = mx.init.Xavier(rnd_type = "gaussian",
+                                         initializer = mx.init.Xavier(rnd_type = "uniform",
                                                                       factor_type = "in",
                                                                       magnitude = 2),
                                          batch.end.callback = mx.callback.log.train.metric(period = 10),
