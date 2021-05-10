@@ -7,7 +7,7 @@ source("./data.preparation.functions.R")
 setwd("/home/stathis/Desktop/testdata/")
 
 #import of data to be predicted
-data = read.csv("/home/stathis/Desktop/SeismicIntensityArticle-master/tweets.initial.classification.csv")
+data <- read.csv("/home/stathis/Desktop/SeismicIntensityArticle-master/tweets.initial.classification.csv")
 
 
 #creation of vectors
@@ -44,7 +44,7 @@ vocab <- length(corpus_bucketed_initial$dic)
 
 batch.size <- 10
 
-num.round <- 10
+num.round <- 2
 
 initial.data <- mx.io.bucket.iter(buckets = corpus_bucketed_initial$buckets, batch.size = batch.size, 
                                   data.mask.element = 0, shuffle = FALSE)
