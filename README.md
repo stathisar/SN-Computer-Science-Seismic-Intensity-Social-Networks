@@ -8,4 +8,4 @@ Main libraries involve mxnet (version 1.8, R package) and gstat.
 
 Sample data, are included.
 
-More information can be found at e.arapostathis@gmail.com
+For more information please contact at: e.arapostathis@gmail.com
