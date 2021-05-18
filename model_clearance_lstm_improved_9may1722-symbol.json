@@ -1,0 +1,122 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "embed.weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Embedding", 
+      "name": "embed", 
+      "attrs": {
+        "input_dim": "242", 
+        "output_dim": "2"
+      }, 
+      "inputs": [[0, 0, 0], [1, 0, 0]]
+    }, 
+    {
+      "op": "SwapAxis", 
+      "name": "swap_pre", 
+      "attrs": {
+        "dim1": "0", 
+        "dim2": "1"
+      }, 
+      "inputs": [[2, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "rnn.params.weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "rnn.state", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "rnn.state.cell", 
+      "inputs": []
+    }, 
+    {
+      "op": "RNN", 
+      "name": "RNN", 
+      "attrs": {
+        "bidirectional": "0", 
+        "mode": "lstm", 
+        "num_layers": "1", 
+        "p": "0.2", 
+        "state_outputs": "0", 
+        "state_size": "10"
+      }, 
+      "inputs": [[3, 0, 0], [4, 0, 0], [5, 0, 0], [6, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "seq.mask", 
+      "inputs": []
+    }, 
+    {
+      "op": "SequenceLast", 
+      "name": "mask", 
+      "attrs": {"use_sequence_length": "1"}, 
+      "inputs": [[7, 0, 0], [8, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "cls.weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "cls.bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "FullyConnected", 
+      "name": "decode", 
+      "attrs": {"num_hidden": "2"}, 
+      "inputs": [[9, 0, 0], [10, 0, 0], [11, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "label", 
+      "inputs": []
+    }, 
+    {
+      "op": "SoftmaxOutput", 
+      "name": "loss", 
+      "attrs": {
+        "ignore_label": "-1", 
+        "use_ignore": "0"
+      }, 
+      "inputs": [[12, 0, 0], [13, 0, 0]]
+    }
+  ], 
+  "arg_nodes": [0, 1, 4, 5, 6, 8, 10, 11, 13], 
+  "node_row_ptr": [
+    0, 
+    1, 
+    2, 
+    3, 
+    4, 
+    5, 
+    6, 
+    7, 
+    8, 
+    9, 
+    10, 
+    11, 
+    12, 
+    13, 
+    14, 
+    15
+  ], 
+  "heads": [[14, 0, 0]], 
+  "attrs": {"mxnet_version": ["int", 10800]}
+}
